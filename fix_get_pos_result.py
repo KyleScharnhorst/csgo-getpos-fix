@@ -2,15 +2,13 @@ import sys
 import os
 
 z_magic_value = float("64.062561")
-setpos_z_val_index = 4
 
 def print_help():
     print('call like this:')
     print('python', os.path.basename(__file__), '"setpos -800.009644 -2879.966309 239.025986;setang -23.661070 114.181854 0.000000"')
     print('Need quotes.')
 
-def handle_single_arg():
-    getpos_output = sys.argv[1]
+def handle_single_arg(getpos_output):
     setpos_and_setang = getpos_output.split(";")
     split_setpos = setpos_and_setang[0].split(" ")
     z_value = float(split_setpos[3])
@@ -23,7 +21,7 @@ def handle_single_arg():
     new_setpos_str = ' '.join(split_setpos)
     setpos_and_setang[0] = new_setpos_str
     result = ';'.join(setpos_and_setang)
-    print(result)
+    return result
 
 if __name__ == "__main__":
     try:
@@ -35,7 +33,7 @@ if __name__ == "__main__":
 
         # first arg is filename
         if arg_count == 2:
-            handle_single_arg()
+            print(handle_single_arg(sys.argv[1]))
         else:
             raise Exception("Must provide a single argument.")
     except Exception as e:
